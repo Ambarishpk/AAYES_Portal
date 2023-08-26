@@ -1,0 +1,52 @@
+1.Name	
+2.Gender
+3.Date Of Birth
+4.Languages spoken
+5.District
+6.Mobile Number
+7.Whatsapp Number	
+8.Address for Communication
+9.Profession
+10.Educational Qualification
+11.Designation
+12.Are you in service  or got retired	
+13.Type of employment
+15.Member of
+16.Email Address
+17.What Role you would like to play for this program?
+18.If source person
+19.Your previous experience  if you want to become resource persons
+20.What Role would you like to play in AAYES?	
+21.Marital status
+22.Monthly income in Rs
+23.Father/ Spouse name
+24.Father / Spouse Monthly income	
+25.Father / Spouse occupation
+26.Number of Children
+27.Are you involved in any other social service activities?
+28.Are you affiliated with any NGO or Trust?
+29.How many hours can you dedicate for this project in a week?
+30.Do you own a vehicle?
+31.Are you willing to attend the workshop for district coordinators on 29th and 30th at Pondicherry?
+32.Will you attend residential training programs in future if necessary?
+33.Are you willing to pay registration fees for the workshops?
+34.How much money can you donate per month for social activities?
+35.Religion
+36.Do you believe in God?
+37.Do you call brahmins for your rituals?
+38.Do you believe in all rituals?
+39.For your family, do you worship of heirlooms?
+40.What's the cause for untouchability?
+41.What is the main problem of dalits?
+42.Do you think that untouchability is related to religion?
+43.What's the solution given by Dr.Ambedkar for eradicating untouchability?
+44.What is the solution for untouchability, from your point of view?
+45.Have you read Dr. Ambedkar books? If yes, what's the name of your favourite book?
+46.Are you willing to work for this project as volunteer without any payment?
+48.Additional Skills and talents?
+49.Are you willing to visit the ADW hostels frequently?
+50.Social media Account ID (optional)
+51.Do you agree that Conversion is a solution for untouchability?
+52.Is untouchability prevalent nowadays?
+53.If you are appointed as a District coordinator, How many assistant district coordinators  (volunteers) you can gather to support you?
+54.Are you affiliated to any political party? If yes, which party?

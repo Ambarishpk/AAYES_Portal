@@ -1,0 +1,503 @@
+<!-- registration.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-light text-dark p-5 mt-0 rounded shadow-lg">
+    <h6 class="fw-bold">அன்பு சகோதர சகோதரிகளே!</h6>
+    <p class="fw-light">அண்மையில் எம்.எம்.டி மற்றும் நர்ச்சர் அமைப்புகள் சார்பாக, தமிழ்நாடு ஆதிதிராவிடர் நலத்துறையுடன் இணைந்து அனைத்து மாவட்டங்களிலும் 114 இடங்களில், ஆதிதிராவிடர் பள்ளிகளில் பயின்ற +2 மாணவர்களுக்கான வழிகாட்டுதல் நிகழ்ச்சி வெற்றிகரமாக நடத்தி முடிக்கபட்டுள்ளது. 
+        11000 த்திற்கு மேற்பட்ட ஆதிதிராவிட பள்ளி மாணவர்கள் இதன் மூலம் பலனடந்துள்ளனர்.</p>
+
+    <p class="fw-light">இதனைத் தொடர்ந்து ஆதிதிராவிட நல இயக்குனரகத்துடன் இணைந்து அண்ணல் அம்பேத்கர் இளைஞர் மேம்பாட்டு திட்டத்தை  (ANNAL AMBEDKAR YOUTH EMPOWERMENT SCHEME ) (AAYES), 
+        தமிழகத்தில் உள்ள அனைத்து கல்லூரி ஆதிதிராவிட நல விடுதி  மாணவர்களுக்கும் வழங்க திட்டமிட்டுள்ளோம் இந்த வழிகாட்டுதல் பணியினை மன நிறைவோடும், 
+        ஆர்வத்துடனும் நேரத்தை ஒதுக்கி செயல்படக்கூடிய அம்பேத்கர் சிந்தனை உள்ள தன்னார்வலர்கள் ( ஆண்கள் மற்றும் பெண்கள் இரு பாலர்களும் ) அனைத்து மாவட்டங்களிலிருந்தும் வரவேற்கப்படுகிறார்கள்.</p>
+
+    <p class="fw-light">இத்திட்டத்தில் இணைந்து செயல்பட விரும்பும் தன்னார்வலர்கள் கீழ்கண்ட படிவத்தை நிரப்புமாறு அன்போடு கேட்டுக் கொள்ளப்படுகிறார்கள்.</p> 
+
+    <p class="fw-light">மேலும் விவரங்களுக்கு 9566449489ஐ தொடர்பு கொள்ளவும்</p>
+
+    <p class="fw-light">MMT & NURTURE<br>
+    15.06.2023</p>
+
+    </p>
+</div>
+<div class="container mt-3 p-4 rounded shadow-lg bg-light">
+    <h4 class="text-primary text-center text-dark">Registration Form</h4>
+    <hr>
+    <form class="form-control mt-2 border border-dark" style="font-size: 14px">
+        <div class="row p-2">
+
+            {% comment %} Left Side Fields {% endcomment %}
+
+            <div class="col-md-6">
+                <div class="form-group p-1">
+                    <label class="mb-1" for="name">Name / பெயர்<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" class="form-control form-control-sm" id="name" name="name">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label>Gender / பாலினம்<span class="text-danger fw-bold">*</span></label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="male">
+                        <label class="form-check-label">Male / ஆண்</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="female">
+                        <label class="form-check-label">Female / பெண்</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="transgender">
+                        <label class="form-check-label">Transgender / திருநங்கை</label>
+                    </div>
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="dob">Date of Birth / பிறந்த தேதி<span class="text-danger fw-bold">*</span></label>
+                    <input type="date" class="form-control form-control-sm" id="dob" name="dob" max="2003-08-24" required>
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="languages">Language Spoken / நீங்கள் பேசக்கூடிய மொழிகள்</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="languages" value="Tamil">
+                        <label class="form-check-label">Tamil</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="languages" value="English">
+                        <label class="form-check-label">English</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="languages" value="Hindi">
+                        <label class="form-check-label">Hindi</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="otherlanguage" class="form-check-input" name="languages" value="Others">
+                        <label class="form-check-label">Others</label>
+                        
+                    </div>
+                    <input type="text" class="form-control form-control-sm" style="display: none" id="languages" name="languages" placeholder="Enter Languages, separated by commas">
+                </div>
+     
+                <div class="form-group p-1">
+                    <label class="mb-1" for="district">District / மாவட்டம்<span class="text-danger fw-bold">*</span></label>
+                    <select class="form-control form-control-sm" id="district" name="district">
+                        <option value="">Select a district</option>
+                        <option value="Ariyalur">Ariyalur / அரியலூர்</option>
+                        <option value="Chengalpattu">Chengalpattu / செங்கல்பட்டு</option>
+                        <option value="Chennai">Chennai / சென்னை</option>
+                        <option value="Coimbatore">Coimbatore / கோயம்புத்தூர்</option>
+                        <option value="Cuddalore">Cuddalore / கடலூர்</option>
+                        <option value="Dharmapuri">Dharmapuri / தர்மபுரி</option>
+                        <option value="Dindigul">Dindigul / திண்டுக்கல்</option>
+                        <option value="Erode">Erode / ஈரோடு</option>
+                        <option value="Kallakurichi">Kallakurichi / கள்ளக்குறிச்சி</option>
+                        <option value="Kanchipuram">Kanchipuram / காஞ்சிபுரம்</option>
+                        <option value="Kanniyakumari">Kanniyakumari / கன்னியாகுமரி</option>
+                        <option value="Karur">Karur / கரூர்</option>
+                        <option value="Krishnagiri">Krishnagiri / கிருஷ்ணகிரி</option>
+                        <option value="Madurai">Madurai / மதுரை</option>
+                        <option value="Mayiladuthurai">Mayiladuthurai / மயிலாடுதுறை</option>
+                        <option value="Nagapattinam">Nagapattinam / நாகப்பட்டினம்</option>
+                        <option value="Namakkal">Namakkal / நாமக்கல்</option>
+                        <option value="Nilgiris">Nilgiris / நீலகிரி</option>
+                        <option value="Perambalur">Perambalur / பெரம்பலூர்</option>
+                        <option value="Pudukkottai">Pudukkottai / புதுக்கோட்டை</option>
+                        <option value="Ramanathapuram">Ramanathapuram / இராமநாதபுரம்</option>
+                        <option value="Ranipet">Ranipet / ராணிப்பேட்டை</option>
+                        <option value="Salem">Salem / சேலம்</option>
+                        <option value="Sivagangai">Sivagangai /சிவகங்கை</option>
+                        <option value="Tenkasi">Tenkasi / தென்காசி</option>
+                        <option value="Thanjavur">Thanjavur / தஞ்சாவூர்</option>
+                        <option value="Theni">Theni / தேனி</option>
+                        <option value="Thoothukudi">Thoothukudi /தூத்துக்குடி</option>
+                        <option value="Tiruchirappalli">Tiruchirappalli / திருச்சிராப்பள்ளி</option>
+                        <option value="Tirunelveli">Tirunelveli / திருநெல்வேலி</option>
+                        <option value="Tirupathur">Tirupathur / திருப்பத்தூர்</option>
+                        <option value="Tiruppur">Tiruppur / திருப்பூர்</option>
+                        <option value="Tiruvallur">Tiruvallur / திருவள்ளூர்</option>
+                        <option value="Tiruvannamalai">Tiruvannamalai / திருவண்ணாமலை</option>
+                        <option value="Tiruvarur">Tiruvarur / திருவாரூர்</option>
+                        <option value="">Vellore வேலூர்</option>
+                        <option value="Viluppuram">Viluppuram / விழுப்புரம்</option>
+                        <option value="Virudhunagar">Virudhunagar / விருதுநகர்</option>
+                        <!-- Populate districts here -->
+                    </select>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="employment">In Service/Retired</label>
+                    <select class="form-control form-control-sm" id="employment" name="employment">
+                        <option value="">Select your employment status</option>
+                        <option value="service">In Service / பணியில் இருக்கிறேன்</option>
+                        <option value="retired">Retired / பணி ஓய்வு பெற்று விட்டேன்</option>
+                    </select>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="employment_type">Type of Employment / வேலை வகை<span class="text-danger fw-bold">*</span></label>
+                    <select class="form-control form-control-sm" id="employment_type" name="employment_type">
+                        <option value="">Select your type of employment</option>
+                        <option id="sg" value="state government">State Government / மாநில அரசு</option>
+                        <option id="cg" value="central government">Central Government / மத்திய அரசு</option>
+                        <option id="pus" value="public sector">Public Sector / பொதுத்துறை</option>
+                        <option id="prs" value="private sector">Private Sector / தனியார் துறை</option>
+                        <option id="prs" value="private sector">Self Employed / சுயதொழில்</option>
+                        <option id="e_type_other" value="others">Others</option>
+                    </select>
+                    <input type="text" class="form-control form-control-sm mt-2" style="display: none" id="employment_type_other" name="employment_type_other" placeholder="Enter your type of employment">
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="memberof">Member of / உறுப்பினர்</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="memberof" value="MMT">
+                        <label class="form-check-label">MMT</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="memberof" value="NURTURE">
+                        <label class="form-check-label">NURTURE</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="memberof" value="NONE">
+                        <label class="form-check-label">NONE</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="memberof_others" class="form-check-input" name="memberof" value="Others">
+                        <label class="form-check-label">Others</label>
+                        
+                    </div>
+                    <input type="text" class="form-control form-control-sm" style="display: none" id="memberof_others_input" name="mamberof" placeholder="Provide values separated by commas">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="role">What Role you would like to play for this program? /  இந்த திட்டத்தில் நீங்கள் என்ன பங்கு வகிக்க விரும்புகிறீர்கள் ?<span class="text-danger fw-bold">*</span></label>
+                    <select class="form-control form-control-sm" id="role" name="role">
+                        <option value="">Select your role</option>
+                        <option value="rp">Resource person either as a faculty or as a trainer for college hostel students / விடுதியில் தங்கிப் படிக்கும் கல்லூரி மாணவர்களுக்கு பாடம் எடுக்க அல்லது பயிற்சி கொடுக்க விரும்புகிறேன்</option>
+                        <option value="dc">District Coordinator for AAYES  /  மாவட்ட ஒருங்கிணைப்பாளர் AAYES</option>
+                        <option value="adc">Associate District Coordinator for AAYES  /  இணை மாவட்ட ஒருங்கிணைப்பாளர் AAYES</div>
+                        <option value="dadw">DADW (District of Adi Dravida Welfare) Officer / மாவட்ட ஆதி திராவிட நலத்துறை அலுவலர்</option>
+                        <option value="wardan">Wardan / விடுதி காப்பாளர்</option>
+                        <option value="donar">Donor or Sponseror / நன்கொடையாளர் அல்லது ஆதரவாளர்</option>
+                        <!-- Populate roles here -->
+                    </select>
+                </div>
+                
+                <div class="form-group p-1" id="module_interested_div">
+                    <label class="mb-1" for="module_interested">If resource person / trainer,  then Field of interest / பயிற்சியாளர் என்றால் எடுக்க விரும்பும் பாடம்<span class="text-danger fw-bold">*</span></label>
+                    <select class="form-control form-control-sm" id="module_interested" name="module_interested">
+                        <option value="">Select module of interest</option>
+                        <option value="English language and communication skills">English language and communication skills / ஆங்கில மொழி மற்றும் தொடர்பு திறன்</option>
+                        <option value="Digital literacy">Digital literacy / கணிப்பொறி, இணைய பயன்பாடு மற்றும் திறன் வளர்த்தல்</option>
+                        <option value="Entrepreneurship training, skill, knowledge building">Entrepreneurship training, skill, knowledge building / தொழில் முனைவோர் பயிற்சி</option>
+                        <option value="health management ( NCC, Sports ,games, Hobbies , Personal Hygiene, Nutrition)">Health management ( NCC, Sports ,games, Hobbies , Personal Hygiene, Nutrition) / சுகாதார மேலாண்மை</option>
+                        <option value="Moral values ,Ethics in life">Moral values ,Ethics in life / ஒழுக்க நெறிமுறைகளை பின்பற்றுதல்</option>
+                        <option value="Preparing for competitive exams">Preparing for competitive exams / போட்டித் தேர்வுகளுக்கு தயாராதல்</option>
+                        <option value="others">Any other Skills? / இவை அல்லாத வேறு திறன் வளர்ப்பில் தங்கள் பங்களிப்பு இருக்குமானால் குறிப்பிடுக</option>
+                        <option value="null">Not Applicable / இவை எதுவும் பொருந்தாது</option>
+                    </select>
+                    <input type="text" class="form-control form-control-sm mt-2" style="display: none" id="module_intrested_other" name="module_intrested_other" placeholder="Enter any other skills?">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="previous_experience">Your previous experience  if you want to become resource persons / நீங்கள் பயிற்சியாளர் ஆக விரும்பினால் உங்கள் முந்தைய அனுபவம்</label>
+                    <input type="text" class="form-control form-control-sm" id="previous_experience" name="previous_experience">
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="social_activities">Are you involved in any other social service activities? நீங்கள் வேறு ஏதேனும் சமூகப் பணிகளில் சேவைகளில் ஈடுபட்டு உள்ளீர்களா ?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="social_activities" value="yes">
+                        <label class="form-check-label"> Yes / ஆம் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="social_activities" value="no">
+                        <label class="form-check-label"> No / இல்லை </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="social_activities" value="maybe">
+                        <label class="form-check-label"> May be / இருக்க கூடும் </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="ngo_or_trust">Are you affiliated with any NGO or Trust? If yes, mention the name.
+                    நீங்கள் எதுவும் தொண்டு நிறுவனம் அல்லது அமைப்பை சார்ந்துள்ளீர்களா?
+                    ஆம் எனில் அதன் பெயர்?</label>
+                    <input type="text" class="form-control form-control-sm" id="ngo_or_trust" name="ngo_or_trust" placeholder="If no, enter Nil">
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="available_hours">How many hours can you dedicate for this project in a week ? ஒரு வாரத்தில் இந்தத் திட்டத்திற்காக எத்தனை மணிநேரம் ஒதுக்கலாம்?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="available_hours" value=" more than 2 hours per day on daily basis">
+                        <label class="form-check-label"> ஒரு நாளைக்கு இரண்டு மணி நேரத்திற்கு மேல் தினமும். </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="available_hours" value=" less than 2 hours per day on daily basis">
+                        <label class="form-check-label"> ஒரு நாளைக்கு இரண்டு மணி நேரத்திற்கு கீழ் தினமும் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="available_hours" value=" more than 2 hours per week">
+                        <label class="form-check-label"> வாரத்திற்கு இரண்டு மணி நேரத்திற்கு மேல் வாய்ப்பு கிடைக்கும் தினங்களில் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="available_hours" value=" less than 2 hours per week">
+                        <label class="form-check-label"> வாரத்திற்கு இரண்டு மணி நேரத்திற்கு கீழ் வாய்ப்பு கிடைக்கும் தினங்களில் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="available_hours" value="no specific hours. will be available on free time">
+                        <label class="form-check-label"> குறிப்பிட்டு சொல்ல முடியாது. வாய்ப்பு கிடைக்கும்போது நேரம் ஒதுக்குவேன் </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="willing_to_attempt_workshop_at_pandichery">Are you willing to attend the workshop for district coordinators on 29th and 30th at Pondicherry? 29 மற்றும் 30 தேதிகளில் மாவட்ட ஒருங்கிணைப்பாளர்களுக்கு பாண்டிச்சேரியில் நடைபெறும் பயிலரங்கில் கலந்து கொள்ள தயாரா?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_workshop_at_pandichery" value="yes">
+                        <label class="form-check-label"> Yes / ஆம் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_workshop_at_pandichery" value="no">
+                        <label class="form-check-label"> No / இல்லை </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_workshop_at_pandichery" value="maybe">
+                        <label class="form-check-label"> May be / இருக்க கூடும் </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="willing_to_attempt_residential_training">Will you attend residential training programs in future if necessary? தேவைப்பட்டால் எதிர்காலத்தில் குடியிருப்பு பயிற்சி திட்டங்களில் கலந்து கொள்வீர்களா?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_residential_training" value="yes">
+                        <label class="form-check-label"> Yes / ஆம் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_residential_training" value="no">
+                        <label class="form-check-label"> No / இல்லை </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_attempt_residential_training" value="maybe">
+                        <label class="form-check-label"> May be / இருக்க கூடும் </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="willing_to_pay_fee_for_workshop_fee">Are you willing to pay registration fees for the workshops ? இந்தப் பயிற்சிக்கான பதிவுக் கட்டணத்தைச் செலுத்த நீங்கள் தயாரா?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_pay_fee_for_workshop_fee" value="yes">
+                        <label class="form-check-label"> Yes / ஆம் </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="willing_to_pay_fee_for_workshop_fee" value="no">
+                        <label class="form-check-label"> No / இல்லை </label>
+                    </div>
+                </div>
+
+                 <div class="form-group p-1">
+                    <label class="mb-1" for="money_can_donate">How much money can you donate per month for social activities (in Rs)? சமூக சேவைகளுக்காக தங்களால் மாதம் எவ்வளவு தொகை ஒதுக்க முடியும்</label>
+                    <input type="tel" class="form-control form-control-sm" id="money_can_donate" name="money_can_donate" pattern="[0-9]{10}">
+                </div>
+
+            </div>
+
+            {% comment %} Right Side Fields {% endcomment %}
+            
+            <div class="col-md-6">
+                <div class="form-group p-1">
+                    <label class="mb-1" for="mobile">Mobile Number / கைபேசி எண்<span class="text-danger fw-bold">*</span></label>
+                    <input type="tel" class="form-control form-control-sm" id="mobile" name="mobile" pattern="[0-9]{10}">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="email">Email / மின்னஞ்சல்</label>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="whatsapp">WhatsApp Number / வாட்ஸ் அப் எண்</label> <span></span>
+                    <input type="tel" class="form-control form-control-sm" id="whatsapp" name="whatsapp" pattern="[0-9]{10}">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="address">Address முகவரி</label>
+                    <textarea class="form-control form-control-sm" id="address" name="address" rows="4"></textarea>
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="profession">Profession / தொழில்</label>
+                    <select class="form-control form-control-sm" id="profession" name="profession">
+                        <option value="">Select your profession</option>
+                        <option value="engineer">Engineer / பொறியாளர்</option>
+                        <option value="doctor">Doctor / மருத்துவர்</option>
+                        <option value="lawyer">Lawyer / வழக்கறிஞர்</option>
+                        <option value="teacher">Teacher / ஆசிரியர்</option>
+                        <option value="entrepreneur">Entrepreneur / சொந்தத் தொழில் புரிவோர்</option>
+                        <option value="profession_others">Others</option>
+                    </select>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="education_qualification">Educational Qualification /  கல்வி தகுதி</label>
+                    <input type="text" class="form-control form-control-sm" id="education_qualification" name="education_qualification">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="designation">Designation / வகித்த ,வகித்துக் கொண்டிருக்கும் பதவி</label>
+                    <input type="text" class="form-control form-control-sm" id="designation" name="designation">
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="marital_status">Marital Status / திருமண நிலை<span class="text-danger fw-bold">*</span></label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="marital_status" value="married">
+                        <label class="form-check-label">Married / திருமணமானவர்</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="marital_status" value="single">
+                        <label class="form-check-label">Single / திருமணம் ஆகாதவர்</label>
+                    </div>
+                </div>
+                
+                <div class="form-group p-1">
+                    <label class="mb-1" for="monthly_income">Monthly income in Rs /  மாத வருமானம் in Rs</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="monthly_income" value="< 10000">
+                        <label class="form-check-label"> &lt 10000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="monthly_income" value="10000 - 50000">
+                        <label class="form-check-label"> 10000 - 50000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="monthly_income" value="50000 - 100000">
+                        <label class="form-check-label"> 50000 - 100000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="monthly_income" value="> 100000">
+                        <label class="form-check-label"> &gt 100000 </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="father_or_spouse_name">Father/ Spouse name  தந்தை / மனைவி அல்லது கணவன் பெயர்</label>
+                    <input type="text" class="form-control form-control-sm" id="father_or_spouse_name" name="father_or_spouse_name">
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="monthly_income">Father / Spouse Monthly income / தந்தை/மனைவி அல்லது கணவன் மாத வருமானம்</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="father_or_spouse_monthly_income" value="< 10000">
+                        <label class="form-check-label"> &lt 10000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="father_or_spouse_monthly_income" value="10000 - 50000">
+                        <label class="form-check-label"> 10000 - 50000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="father_or_spouse_monthly_income" value="50000 - 100000">
+                        <label class="form-check-label"> 50000 - 100000 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="father_or_spouse_monthly_income" value="> 100000">
+                        <label class="form-check-label"> &gt 100000 </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="father_or_spouse_occupation">Father / Spouse occupation  தந்தை/மனைவி அல்லது கணவன் தொழில்</label>
+                    <input type="text" class="form-control form-control-sm" id="father_or_spouse_occupation" name="father_or_spouse_occupation">
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="number_of_children">Number of Children /  குழந்தைகளின் எண்ணிக்கை</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="number_of_children" value="1">
+                        <label class="form-check-label"> 1 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="number_of_children" value="2">
+                        <label class="form-check-label"> 2 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="number_of_children" value="3">
+                        <label class="form-check-label"> 3 or more </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="number_of_children" value="> 100000">
+                        <label class="form-check-label"> Nil / Not Applicable </label>
+                    </div>
+                </div>
+
+                <div class="form-group p-1">
+                    <label class="mb-1" for="own_vehicle">Do you own a vehicle ? If yes, Type of vehicle . /  உங்களிடம் வாகனம் இருக்கிறதா? ஆம் எனில், வாகனத்தின் வகை</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="own_vehicle" value="2 wheeler">
+                        <label class="form-check-label">Two Wheeler</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="own_vehicle" value="4 wheeler">
+                        <label class="form-check-label">Four Wheeler</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="own_vehicle" value="Not Applicable">
+                        <label class="form-check-label">Nil / Not Applicable</label>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col col-12">
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            </div>
+        </div>        
+    </form>
+</div>
+<script>
+
+    // show and hide language entry field
+    document.addEventListener("DOMContentLoaded", function() {
+        const otherLanguageCheckbox = document.getElementById("otherlanguage");
+        const languagesField = document.getElementById("languages");
+
+        otherLanguageCheckbox.addEventListener("change", function() {
+            if (otherLanguageCheckbox.checked) {
+                languagesField.style.display = "block";
+            } else {
+                languagesField.style.display = "none";
+            }
+        });
+    });
+
+    // accept other employement types
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get references to the select and input elements
+        const employmentTypeSelect = document.getElementById("employment_type");
+        const employmentTypeOtherInput = document.getElementById("employment_type_other");
+
+        // Listen for changes in the select element
+        employmentTypeSelect.addEventListener("change", function() {
+            // If the "Other" option is selected, show the input
+            if (employmentTypeSelect.value === "others") {
+                employmentTypeOtherInput.style.display = "block";
+            } else {
+                employmentTypeOtherInput.style.display = "none";
+            }
+        });
+    });
+
+    // form sumbit
+    document.addEventListener('DOMContentLoaded', function() {
+        const registrationForm = document.querySelector('#registration-form');
+        registrationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Handle form submission with JavaScript
+            // You can use Fetch API to send the form data to your Django backend
+        });
+    });
+</script>
+{% endblock %}
