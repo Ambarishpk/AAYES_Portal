@@ -1,5 +1,31 @@
 from django.shortcuts import render, redirect
 from .models import Application
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.contrib.auth.hashers import make_password
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')  # Redirect to your login page
+
+
+def login_view(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        password = request.POST['password']
+        user = authenticate(request, id=id, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redirect to your home page
+        else:
+            error_message = 'Invalid credentials'
+    else:
+        error_message = ''
+
+    return render(request, 'login.html', {'error_message': error_message})
 
 
 def home(request):

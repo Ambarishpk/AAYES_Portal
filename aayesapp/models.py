@@ -1,9 +1,26 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
+
+
+def Choices():
+    Choices = [
+        ('DC', 'District Coordinator'),
+        ('ADC', 'Associate District Coordinator'),
+        ('ZC', 'Zonal District Coordinator'),
+        ('SC', 'State Coordinator'),
+        ('MBR', 'Member'),
+        # ... Add other roles if needed
+    ]
+
+    return Choices
 
 
 class Application(models.Model):
 
+    ROLE_CHOICES = Choices()
     # General Info
+    id = models.CharField(max_length=20, primary_key=True,
+                          editable=False)
     name = models.CharField(max_length=50)
     gender = models.CharField(max_length=20)
     date_of_birth = models.DateField()
@@ -18,7 +35,7 @@ class Application(models.Model):
     designation = models.CharField(max_length=100)
     in_service_or_retired = models.CharField(max_length=20)
     type_of_employment = models.CharField(max_length=100)
-    role = models.CharField(max_length=50)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
     module_of_interest = models.CharField(max_length=100)
 
     # Info for SC, ZC, DC, ADC
@@ -63,11 +80,40 @@ class Application(models.Model):
     approved_by_dc = models.BooleanField(default=False)
     approved_by_zc = models.BooleanField(default=False)
     approved_by_sc = models.BooleanField(default=False)
+
+    password = models.CharField(max_length=150, null=False, default="admin")
+
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        if not self.id:
+            if self.role in ('DC', 'ADC', 'ZC', 'SC'):
+                prefix = 'AAYES' + self.role
+                last_id = Application.objects.filter(
+                    role=self.role).order_by('-id').first()
+                if last_id:
+                    last_number = int(last_id.id[-2:]) + 1
+                else:
+                    last_number = 1
+                self.id = f'{prefix}{last_number:02}'
+            else:
+                last_member_id = Application.objects.filter(
+                    role='MBR').order_by('-id').first()
+                if last_member_id:
+                    last_member_number = int(last_member_id.id[-3:]) + 1
+                else:
+                    last_member_number = 1
+                self.id = f'AAYESMBR{last_member_number:03}'
+
+        super(Application, self).save(*args, **kwargs)
 
 
 class Member(models.Model):
 
+    ROLE_CHOICES = Choices()
+
     # General Info
+    id = models.CharField(max_length=20, primary_key=True,
+                          editable=False)
     name = models.CharField(max_length=50)
     gender = models.CharField(max_length=20)
     date_of_birth = models.DateField()
@@ -82,7 +128,7 @@ class Member(models.Model):
     designation = models.CharField(max_length=100)
     in_service_or_retired = models.CharField(max_length=20)
     type_of_employment = models.CharField(max_length=100)
-    role = models.CharField(max_length=50)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
     module_of_interest = models.CharField(max_length=100)
 
     # Info for SC, ZC, DC, ADC
@@ -124,9 +170,34 @@ class Member(models.Model):
     how_many_assistant_district_coordinators_you_can_gather = models.CharField(
         max_length=50)
     affiliated_to_any_political_party = models.CharField(max_length=100)
-    approved_by_dc = models.BooleanField(default=False)
-    approved_by_zc = models.BooleanField(default=False)
-    approved_by_sc = models.BooleanField(default=False)
+    approved_by_dc = models.BooleanField(default=True, editable=False)
+    approved_by_zc = models.BooleanField(default=True, editable=False)
+    approved_by_sc = models.BooleanField(default=True, editable=False)
+
+    password = models.CharField(max_length=150, null=False, default="admin")
+
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        if not self.id:
+            if self.role in ('DC', 'ADC', 'ZC', 'SC'):
+                prefix = 'AAYES' + self.role
+                last_id = Member.objects.filter(
+                    role=self.role).order_by('-id').first()
+                if last_id:
+                    last_number = int(last_id.id[-2:]) + 1
+                else:
+                    last_number = 1
+                self.id = f'{prefix}{last_number:02}'
+            else:
+                last_member_id = Member.objects.filter(
+                    role='MBR').order_by('-id').first()
+                if last_member_id:
+                    last_member_number = int(last_member_id.id[-3:]) + 1
+                else:
+                    last_member_number = 1
+                self.id = f'AAYESMBR{last_member_number:03}'
+
+        super(Member, self).save(*args, **kwargs)
 
 
 def __str__(self):

@@ -1,0 +1,16 @@
+<!-- registration.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">Login</button>
+    </form>
+    <p>{{ error_message }}</p>
+{% endblock %}
