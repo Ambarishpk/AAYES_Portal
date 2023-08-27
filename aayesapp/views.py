@@ -1,27 +1,32 @@
 from django.shortcuts import render, redirect
 from .models import Application
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
 
 
-@login_required
 def logout_view(request):
-    logout(request)
-    return redirect('login')  # Redirect to your login page
+    if 'authenticated_id' in request.session:
+        del request.session['authenticated_id']
+    return redirect('home')
 
 
 def login_view(request):
     if request.method == 'POST':
         id = request.POST['id']
         password = request.POST['password']
-        user = authenticate(request, id=id, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')  # Redirect to your home page
-        else:
-            error_message = 'Invalid credentials'
+
+        try:
+            application_user = Application.objects.get(id=id)
+
+            # Check if the provided password matches the stored encrypted password
+            if check_password(password, application_user.password):
+                request.session['authenticated_id'] = id
+                messages.success(request, 'Successfully Logged In!')
+                return redirect('home')
+            else:
+                error_message = 'Invalid credentials'
+        except Application.DoesNotExist:
+            error_message = 'User not found'
     else:
         error_message = ''
 
@@ -29,63 +34,118 @@ def login_view(request):
 
 
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
+
+
+def events(request):
+    return render(request, 'events.html')
+
+
+def modules(request):
+    return render(request, 'modules.html')
+
+
+def status_check(request):
+    if 'authenticated_id' in request.session:
+        return render(request, 'application_status.html')
+    else:
+        return render(request, 'error.html')
 
 
 def registration(request):
     if request.method == 'POST':
-        name = request.POST['']
-        gender = request.POST['']
-        date_of_birth = request.POST['']
-        languages_spoken = request.POST['']
-        district = request.POST['']
-        mobile_number = request.POST['']
-        whatsapp_number = request.POST['']
-        address = request.POST['']
-        profession = request.POST['']
-        educational_qualification = request.POST['']
-        designation = request.POST['']
-        in_service_or_retired = request.POST['']
-        type_of_employment = request.POST['']
-        member_of = request.POST['']
-        email_address = request.POST['']
-        role = request.POST['']
-        field_of_intrest = request.POST['']
-        previous_experience = request.POST['']
-        marital_status = request.POST['']
-        monthly_income = request.POST['']
-        father_or_spouse_name = request.POST['']
-        father_or_spouse_monthly_income = request.POST['']
-        father_or_spouse_occupation = request.POST['']
-        number_of_children = request.POST['']
-        invoved_in_any_social_activities = request.POST['']
-        affiliated_with_any_ngo_or_trust = request.POST['']
-        hours_can_you_dedicate_in_a_week = request.POST['']
-        own_vehicle = request.POST['']
-        willing_to_attend_workshop = request.POST['']
-        willing_to_attend_residential_training_programs = request.POST['']
-        willing_to_pay_workshop_registration_fee = request.POST['']
-        how_much_money_can_donate_per_month = request.POST['']
-        religion = request.POST['']
-        believe_in_god = request.POST['']
-        call_brahmins_for_rituals = request.POST['']
-        believe_in_rituals = request.POST['']
-        worship_of_heirlooms = request.POST['']
-        cause_for_untouchability = request.POST['']
-        main_problem_of_dalits = request.POST['']
-        untouchability_related_to_religion = request.POST['']
-        solution_given_by_dr_ambedkar_for_untouchability = request.POST['']
-        solution_for_untouchability_your_pov = request.POST['']
-        read_ambedkar_books = request.POST['']
-        willing_to_volunteer_for_free = request.POST['']
-        additional_skills = request.POST['']
-        willing_to_visit_adw_hostels = request.POST['']
-        social_media_account = request.POST['']
-        do_you_agree_that_conversion_is_a_solution_for_untouchability = request.POST['']
-        is_untouchability_prevalent_nowadays = request.POST['']
-        how_many_assistant_district_coordinators_you_can_gather = request.POST['']
-        affiliated_to_any_political_party = request.POST['']
+        name = request.POST.get('name')
+        gender = request.POST.get('gender')
+        date_of_birth = request.POST.get('dob')
 
+        languages_spoken = request.POST.getlist('languages')
+        languages_spoken_other = request.POST.getlist('languages_other', None)
+
+        if 'others' in languages_spoken:
+            languages_spoken.remove('others')
+            languages_spoken += languages_spoken_other
+
+        district = request.POST.get('district')
+        mobile_number = request.POST.get('mobile')
+        email_address = request.POST.get('email')
+        whatsapp_number = request.POST.get('whatsapp')
+        address = request.POST.get('address')
+
+        profession = request.POST.get('profession')
+        if profession == 'others':
+            profession = request.POST.get('profession_other', None)
+
+        educational_qualification = request.POST.get('education_qualification')
+        designation = request.POST.get('designation')
+        in_service_or_retired = request.POST.get('employment_status')
+
+        role = request.POST.get('role')
+        module_of_interest = 'NA'
+
+        type_of_employment = request.POST.get('employment_type')
+        if type_of_employment == 'others':
+            type_of_employment = request.POST.get(
+                'employment_type_other', None)
+
+        if role == "rp":
+            module_of_interest = request.POST.get('module_interested', None)
+            if module_of_interest == 'others':
+                module_of_interest = request.POST.get(
+                    'module_interested_other', None)
+
+        community = request.POST.get('community', None)
+        marital_status = request.POST.get('marital_status', None)
+        monthly_income = request.POST.get('monthly_income', None)
+        father_or_spouse_name = request.POST.get('father_or_spouse_name', None)
+        father_or_spouse_monthly_income = request.POST.get(
+            'father_or_spouse_monthly_income', None)
+        father_or_spouse_occupation = request.POST.get(
+            'father_or_spouse_occupation', None)
+        number_of_children = request.POST.get('number_of_children', None)
+        invoved_in_any_social_activities = request.POST.get(
+            'social_activities', None)
+        affiliated_with_any_ngo_or_trust = request.POST.get(
+            'ngo_or_trust', None)
+        hours_can_dedicate = request.POST.get(
+            'available_hours', None)
+        own_vehicle = request.POST.get('own_vehicle', None)
+        willing_to_attend_residential_training_programs = request.POST.get(
+            'residential_training', None)
+        money_can_you_donate_per_month = request.POST.get(
+            'money_can_donate', None)
+        religion = request.POST.get('religion', None)
+        believe_in_god = request.POST.get('believe_in_god', None)
+        call_brahmins_for_rituals = request.POST.get(
+            'call_brahmins_for_rituals', None)
+        believe_in_rituals = request.POST.get('believe_in_rituals', None)
+        worship_of_heirlooms = request.POST.get('worship_of_heirlooms', None)
+        cause_for_untouchability = request.POST.get(
+            'cause_for_untouchability', None)
+        main_problem_of_dalits = request.POST.get('problem_of_dalits', None)
+        untouchability_related_to_religion = request.POST.get(
+            'related_to_religion', None)
+        solution_given_by_dr_ambedkar_for_untouchability = request.POST.get(
+            'solution_givenby_ambedkar', None)
+        solution_for_untouchability_your_pov = request.POST.get(
+            'solution_for_untouchability', None)
+        read_ambedkar_books = request.POST.get('ambedkar_books', None)
+        willing_to_volunteer_for_free = request.POST.get(
+            'willing_to_volunteer', None)
+        hobby = request.POST.get('hobby', None)
+        additional_skills = request.POST.get('additional_skills', None)
+        willing_to_visit_adw_hostels = request.POST.get(
+            'visit_adw_hostels', None)
+        social_media_account = request.POST.get('social_media_account', None)
+        do_you_agree_that_conversion_is_a_solution_for_untouchability = request.POST.get(
+            'conversion', None)
+        is_untouchability_prevalent_nowadays = request.POST.get(
+            'untouchability_prevalent', None)
+        how_many_assistant_district_coordinators_you_can_gather = request.POST.get(
+            'adc_can_gather', None)
+        affiliated_to_any_political_party = request.POST.get(
+            'political_party', None)
+        password = request.POST.get('password')
+#
         # Create the user instance
         application = Application(
             name=name,
@@ -101,11 +161,10 @@ def registration(request):
             designation=designation,
             in_service_or_retired=in_service_or_retired,
             type_of_employment=type_of_employment,
-            member_of=member_of,
             email_address=email_address,
             role=role,
-            field_of_intrest=field_of_intrest,
-            previous_experience=previous_experience,
+            module_of_interest=module_of_interest,
+            community=community,
             marital_status=marital_status,
             monthly_income=monthly_income,
             father_or_spouse_name=father_or_spouse_name,
@@ -114,12 +173,10 @@ def registration(request):
             number_of_children=number_of_children,
             invoved_in_any_social_activities=invoved_in_any_social_activities,
             affiliated_with_any_ngo_or_trust=affiliated_with_any_ngo_or_trust,
-            hours_can_you_dedicate_in_a_week=hours_can_you_dedicate_in_a_week,
+            hours_can_dedicate=hours_can_dedicate,
             own_vehicle=own_vehicle,
-            willing_to_attend_workshop=willing_to_attend_workshop,
             willing_to_attend_residential_training_programs=willing_to_attend_residential_training_programs,
-            willing_to_pay_workshop_registration_fee=willing_to_pay_workshop_registration_fee,
-            how_much_money_can_donate_per_month=how_much_money_can_donate_per_month,
+            money_can_you_donate_per_month=money_can_you_donate_per_month,
             religion=religion,
             believe_in_god=believe_in_god,
             call_brahmins_for_rituals=call_brahmins_for_rituals,
@@ -132,6 +189,7 @@ def registration(request):
             solution_for_untouchability_your_pov=solution_for_untouchability_your_pov,
             read_ambedkar_books=read_ambedkar_books,
             willing_to_volunteer_for_free=willing_to_volunteer_for_free,
+            hobby=hobby,
             additional_skills=additional_skills,
             willing_to_visit_adw_hostels=willing_to_visit_adw_hostels,
             social_media_account=social_media_account,
@@ -139,6 +197,7 @@ def registration(request):
             is_untouchability_prevalent_nowadays=is_untouchability_prevalent_nowadays,
             how_many_assistant_district_coordinators_you_can_gather=how_many_assistant_district_coordinators_you_can_gather,
             affiliated_to_any_political_party=affiliated_to_any_political_party,
+            password=password
         )
         application.save()
         # Redirect to registration page after successful registration

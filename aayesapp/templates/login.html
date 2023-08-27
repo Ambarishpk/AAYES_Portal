@@ -3,14 +3,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="id">ID:</label>
-        <input type="text" id="id" name="id"><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-    <p>{{ error_message }}</p>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 mt-3 p-4 rounded shadow-lg bg-light">
+        <h4 class="text-primary text-center text-uppercase text-danger">Login</h4>
+        <hr>
+        <form class="form-control mt-2 border border-dark" style="font-size: 18px" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form-group p-1">
+                        <label class="mb-1 mt-3" for="id">Username</label>
+                        <input type="text" required class="form-control form-control-sm" id="id" name="id">
+                    </div>
+                    <div class="form-group p-1">
+                        <label class="mb-1 mt-3" for="password">Password</label>
+                        <input type="password" required class="form-control form-control-sm" id="password" name="password">
+                    </div>
+                    <div class="form-group p-1 mt-2 mb-3 text-center">
+                        <button type="submit" class="btn btn-primary btn-md rounded">Login</button>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </form>
+        <p>{{ error_message }}</p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
 {% endblock %}
