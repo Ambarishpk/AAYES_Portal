@@ -6,28 +6,12 @@
     <title>AAYES</title>
     <!-- Include Bootstrap CSS and other styles/scripts here -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .landscape-div {
-            width: 100%;
-            height: 500px; 
-            position: relative;
-            background-color: #625855;
-        }
-
-        .landscape-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-    </style>
 </head>
-<body style="background-color: #E8EAED">
-    <div class="landscape-div">
-        <img class="landscape-image" src="{% static 'images/ambedkar_banner.jpg' %}" alt="Landscape Image">
-    </div>
-
-    <nav class="navbar navbar-expand-lg navbar-secondary bg-light p-2 sticky-top">
+<body style="background-color: #E8EAED; overflow-x: hidden;">
+   
+    <nav class="navbar navbar-expand-lg navbar-light p-2 sticky-top" style="background-color:#4285F4; color: white">
        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,24 +22,38 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#user-guidance">User Guidance</a>
+                    <a class="nav-link" href="/events">Events</a>
                 </li>
+                {% if request.session.authenticated_id %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#application-status">Application Status</a>
+                    <a class="nav-link" href="/application-status">Application Status</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#modules">Modules</a>
+                    <a class="nav-link" href="/modules">Modules</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#login">Login</a>
+                    {% if request.session.authenticated_id %}
+                        <a class="nav-link" href="/logout">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="/login">Login</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="container-fluid m-1">
+    <div class="container mt-3 mb-3">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </div>
