@@ -1,12 +1,19 @@
 from django.shortcuts import render, redirect
 from .models import Application
+from django.db.models import Q
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
+
+
+def home(request):
+    return render(request, 'home.html')
 
 
 def logout_view(request):
     if 'authenticated_id' in request.session:
         del request.session['authenticated_id']
+        del request.session['role']
+        del request.session['role_tuple']
     return redirect('home')
 
 
@@ -21,20 +28,43 @@ def login_view(request):
             # Check if the provided password matches the stored encrypted password
             if check_password(password, application_user.password):
                 request.session['authenticated_id'] = id
+                request.session['role'] = application_user.role
+                request.session['role_tuple'] = ['DC', 'SC', 'ZC']
                 messages.success(request, 'Successfully Logged In!')
                 return redirect('home')
             else:
-                error_message = 'Invalid credentials'
+                messages.error(request, 'Invalid Credentials')
         except Application.DoesNotExist:
-            error_message = 'User not found'
+            messages.error(request, 'User Not Found')
     else:
-        error_message = ''
+        pass
 
-    return render(request, 'login.html', {'error_message': error_message})
+    if 'authenticated_id' in request.session:
+        context = {
+            'errorMessage': "You're already logged in.",
+            'errorCode': 200
+        }
+        return render(request, 'error.html', context)
+    else:
+        return render(request, 'login.html')
 
 
-def home(request):
-    return render(request, 'home.html')
+def approval(request):
+    if 'authenticated_id' in request.session:
+        id = request.session.get('authenticated_id')
+        current_user = Application.objects.get(id=id)
+        applications = Application.objects.filter(
+            Q(district=current_user.district) & ~Q(id=id))
+        context = {
+            'applications': applications
+        }
+        return render(request, 'pending-applications.html', context)
+    else:
+        context = {
+            'errorMessage': "You're Not Authenticated to this page.",
+            'errorCode': 401
+        }
+        return render(request, 'error.html', context)
 
 
 def events(request):
@@ -47,9 +77,18 @@ def modules(request):
 
 def status_check(request):
     if 'authenticated_id' in request.session:
-        return render(request, 'application_status.html')
+        id = request.session.get('authenticated_id')
+        application_user = Application.objects.get(id=id)
+        context = {
+            'application_info': application_user
+        }
+        return render(request, 'application_status.html', context)
     else:
-        return render(request, 'error.html')
+        context = {
+            'errorMessage': "You're Not Authenticated to this page.",
+            'errorCode': 401
+        }
+        return render(request, 'error.html', context)
 
 
 def registration(request):
@@ -145,6 +184,31 @@ def registration(request):
         affiliated_to_any_political_party = request.POST.get(
             'political_party', None)
         password = request.POST.get('password')
+
+        status = 'Pending Approval of District Coordinator'
+        approved_by_dc = False
+        approved_by_zc = False
+        approved_by_sc = False
+
+        role_value = request.session.get('role')
+
+        if role_value == 'DC':
+            status = 'Pending Approval of Zonal Coordinator'
+            approved_by_dc = True
+            approved_by_zc = False
+            approved_by_sc = False
+        elif role_value == 'ZC':
+            status = 'Pending Approval of State Coordinator'
+            approved_by_dc = True
+            approved_by_zc = True
+            approved_by_sc = False
+        elif role_value == 'SC':
+            status = 'Approved'
+            approved_by_dc = True
+            approved_by_zc = True
+            approved_by_sc = True
+        else:
+            pass
 #
         # Create the user instance
         application = Application(
@@ -197,9 +261,18 @@ def registration(request):
             is_untouchability_prevalent_nowadays=is_untouchability_prevalent_nowadays,
             how_many_assistant_district_coordinators_you_can_gather=how_many_assistant_district_coordinators_you_can_gather,
             affiliated_to_any_political_party=affiliated_to_any_political_party,
-            password=password
+            password=password,
+            status=status,
+            approved_by_dc=approved_by_dc,
+            approved_by_zc=approved_by_zc,
+            approved_by_sc=approved_by_sc
         )
         application.save()
-        # Redirect to registration page after successful registration
-        return redirect('registration')
+
+        messages.success(
+            request, f'Registration successful. Your ID is {application.id}. Please note down this ID to track your application status.')
+        if 'authenticated_id' in request.session:
+            return redirect('home')
+        else:
+            return redirect('login')
     return render(request, 'registration.html')

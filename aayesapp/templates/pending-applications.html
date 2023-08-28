@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="">
+    <h4 class="text-center text-danger">Applications are Pending With Approval</h4>
+    <p class="text-center text-muted">Developement is in progress. Please visit later.</p>
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-bordered table-hover" style="font-size: 13px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Languages Spoken</th>
+                    <th>District</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Whatsapp</th>
+                    <th>Address</th>
+                    <th>Profession</th>
+                    <th>Education</th>
+                    <th>Designation</th>
+                    <th>Service Status</th>
+                    <th>Role</th>
+                    <th>Module</th>
+                    <th>Community</th>
+                    <th>Marital Status</th>
+                    <th>Monthly Income</th>
+                    <th>Father / Spouse</th>
+                    <th>Father / Spouse Occupation</th>
+                    <th>Father / Spouse Income</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+                    <td class="text-capitalize">{{ application.name }}</td>
+                    <td class="text-capitalize">{{ application.gender }}</td>
+                    <td class="text-capitalize">{{ application.date_of_birth }}</td>
+                    <td class="text-capitalize">{{ application.languages_spoken }}</td>
+                    <td class="text-capitalize">{{ application.district }}</td>
+                    <td class="text-capitalize">{{ application.mobile_number }}</td>
+                    <td class="">{{ application.email_address }}</td>
+                    <td class="text-capitalize">{{ application.whatsapp_number }}</td>
+                    <td class="text-capitalize">{{ application.address }}</td>
+                    <td class="text-capitalize">{{ application.profession }}</td>
+                    <td class="text-capitalize">{{ application.educational_qualification }}</td>
+                    <td class="text-capitalize">{{ application.designation }}</td>
+                    <td class="text-capitalize">{{ application.in_service_or_retired }}</td>
+                    <td class="text-capitalize">{{ application.role }}</td>
+                    <td class="text-capitalize">{{ application.module_of_interest }}</td>
+                    <td class="text-capitalize">{{ application.community }}</td>
+                    <td class="text-capitalize">{{ application.marital_status }}</td>
+                    <td class="text-capitalize">{{ application.monthly_income }}</td>
+                    <td class="text-capitalize">{{ application.father_or_spouse_name }}</td>
+                    <td class="text-capitalize">{{ application.father_or_spouse_occupation }}</td>
+                    <td class="text-capitalize">{{ application.father_or_spouse_monthly_income }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-muted text-center mt-5 pt-5">No Pending Applications</p>
+    {% endif %}
+</div>
+
+{% endblock %}
