@@ -3,7 +3,7 @@ from .models import Application
 
 
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'approved_by_dc',
+    list_display = ['id', 'name', 'approved_by_dc',
                     'approved_by_zc', 'approved_by_sc', 'status']
 
 

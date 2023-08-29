@@ -111,16 +111,15 @@ class Application(models.Model):
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
-        if not self.id:
-            if self.role in ('DC', 'ADC', 'ZC', 'SC'):
-                prefix = 'AAYES' + self.role
-                last_id = Application.objects.filter(
-                    role=self.role).order_by('-id').first()
-                if last_id:
-                    last_number = int(last_id.id[-2:]) + 1
-                else:
-                    last_number = 1
-                self.id = f'{prefix}{last_number:02}'
+        if not self.id:  # Only for new instances
+            if self.role == 'SC':
+                prefix = 'AAYESSC'
+            elif self.role == 'DC':
+                prefix = 'AAYESDC'
+            elif self.role == 'ZC':
+                prefix = 'AAYESZC'
+            elif self.role == 'ADC':
+                prefix = 'AAYESADC'
             else:
                 last_member_id = Application.objects.filter(
                     role='MBR').order_by('-id').first()
@@ -128,7 +127,15 @@ class Application(models.Model):
                     last_member_number = int(last_member_id.id[-3:]) + 1
                 else:
                     last_member_number = 1
-                self.id = f'AAYESMBR{last_member_number:03}'
+                prefix = 'AAYESMBR'
+                self.id = f'{prefix}{last_member_number:03}'
+            last_id = Application.objects.filter(
+                role=self.role).order_by('-id').first()
+            if last_id and last_id.id.startswith(prefix):
+                last_number = int(last_id.id[len(prefix):]) + 1
+            else:
+                last_number = 1
+            self.id = f'{prefix}{last_number:03}'
 
         super(Application, self).save(*args, **kwargs)
 

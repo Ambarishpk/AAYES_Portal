@@ -12,5 +12,6 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('modules/', views.modules, name='modules'),
     path('pending-applications/', views.approval, name='pending-applications'),
+    path('approve/', views.approval, name='approve'),
     # Add other URL patterns as needed
 ]

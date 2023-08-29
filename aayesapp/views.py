@@ -50,13 +50,47 @@ def login_view(request):
 
 
 def approval(request):
+    if request.method == 'POST':
+        approve_id = request.POST.get('id-to-approve')
+        current_user_id = request.session.get('authenticated_id')
+        print('Approve ID is: ', approve_id)
+        try:
+            application = Application.objects.get(id=approve_id)
+        except Application.DoesNotExist:
+            return render(request, 'error.html', {'error_message': 'Application not found.'})
+
+        if 'DC' in current_user_id:
+            application.approved_by_dc = True
+            application.status = 'Pending Approval of ZC'
+        elif 'ZC' in current_user_id:
+            application.approved_by_zc = True
+            application.status = 'Pending Approval of SC'
+        elif 'SC' in current_user_id:
+            application.approved_by_sc = True
+            application.status = 'Approved'
+        else:
+            pass
+
+        application.save()
+
+        messages.success(request, f'Application has been Approved')
+
     if 'authenticated_id' in request.session:
         id = request.session.get('authenticated_id')
         current_user = Application.objects.get(id=id)
+        if 'DC' in current_user.id:
+            status = 'Pending Approval of DC'
+        elif 'ZC' in current_user.id:
+            status = 'Pending Approval of ZC'
+        elif 'SC' in current_user.id:
+            status = 'Pending Approval of SC'
+        else:
+            pass
         applications = Application.objects.filter(
-            Q(district=current_user.district) & ~Q(id=id))
+            Q(district=current_user.district) & Q(status=status))
         context = {
-            'applications': applications
+            'applications': applications,
+            'current_user_role': current_user.role
         }
         return render(request, 'pending-applications.html', context)
     else:
