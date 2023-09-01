@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="container mt-5 pt-5">
-    <h4 class="text-center text-danger">Application ID: {{ request.session.authenticated_id }}</h4>
+    <h5 class="text-center text-danger">Your Application ID: {{ application_info.id }}</h5>
+    <h5 class="text-center text-danger">Your Application Status: {{ application_info.status }}</h5>
     <p class="text-center text-muted">Developement is in progress. Please visit later.</p>
 </div>
 

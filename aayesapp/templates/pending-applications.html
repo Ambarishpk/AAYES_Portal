@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <h4 class="text-center text-danger">Applications with Pending Approvals</h4>
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-bordered table-hover" style="font-size: 13px">
+            <thead>
+                <tr class="text-capitalize text-left">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Languages Spoken</th>
+                    <th>District</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Whatsapp</th>
+                    <th>Address</th>
+                    <th>Profession</th>
+                    <th>Education</th>
+                    <th>Designation</th>
+                    <th>Service Status</th>
+                    <th>Role</th>
+                    <th>Module</th>
+                    <th>Community</th>
+                    <th>Marital Status</th>
+                    <th>Monthly Income</th>
+                    <th>Father / Spouse</th>
+                    <th>Father / Spouse Occupation</th>
+                    <th>Father / Spouse Income</th>
+                    <th>number of children</td>
+                    <th>invoved in any social activities</td>
+                    <th>affiliated with any ngo or trust</td>
+                    <th>hours can dedicate</td>
+                    <th>own vehicle</td>
+                    <th>willing to attend residential training programs</td>
+                    <th>money can you donate per month</td>
+                    <th>religion</td>
+                    <th>believe in god</td>
+                    <th>call brahmins for rituals</td>
+                    <th>believe in rituals</td>
+                    <th>worship of heirlooms</td>
+                    <th>cause for untouchability</td>
+                    <th>main problem of dalits</td>
+                    <th>untouchability related to religion</td>
+                    <th>solution given by dr ambedkar for untouchability</td>
+                    <th>solution for untouchability your pov</td>
+                    <th>read ambedkar books</td>
+                    <th>willing to volunteer for free</td>
+                    <th>hobby</td>
+                    <th>additional skills</td>
+                    <th>willing to visit adw hostels</td>
+                    <th>social media account</td>
+                    <th>do you agree that conversion is a solution for untouchability</td>
+                    <th>is untouchability prevalent nowadays</td>
+                    <th>how many assistant district coordinators you can gather</td>
+                    <th>affiliated to any political party</td>
+                    <th>status</td>
+                    <th>approved by dc</td>
+                    <th>approved by zc</td>
+                    <th>approved by sc</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr class="text-capitalize text-left">
+                    <td>{{ application.id }}</td>
+                    <td>{{ application.name }}</td>
+                    <td>{{ application.gender }}</td>
+                    <td>{{ application.date_of_birth }}</td>
+                    <td>{{ application.languages_spoken }}</td>
+                    <td>{{ application.district }}</td>
+                    <td>{{ application.mobile_number }}</td>
+                    <td class="text-lowercase">{{ application.email_address }}</td>
+                    <td>{{ application.whatsapp_number }}</td>
+                    <td>{{ application.address }}</td>
+                    <td>{{ application.profession }}</td>
+                    <td>{{ application.educational_qualification }}</td>
+                    <td>{{ application.designation }}</td>
+                    <td>{{ application.in_service_or_retired }}</td>
+                    <td>{{ application.role }}</td>
+                    <td>{{ application.module_of_interest }}</td>
+                    <td>{{ application.community }}</td>
+                    <td>{{ application.marital_status }}</td>
+                    <td>{{ application.monthly_income }}</td>
+                    <td>{{ application.father_or_spouse_name }}</td>
+                    <td>{{ application.father_or_spouse_occupation }}</td>
+                    <td>{{ application.father_or_spouse_monthly_income }}</td>
+                    <td>{{ application.number_of_children }}</td>
+                    <td>{{ application.invoved_in_any_social_activities }}</td>
+                    <td>{{ application.affiliated_with_any_ngo_or_trust }}</td>
+                    <td>{{ application.hours_can_dedicate }}</td>
+                    <td>{{ application.own_vehicle }}</td>
+                    <td>{{ application.willing_to_attend_residential_training_programs }}</td>
+                    <td>{{ application.money_can_you_donate_per_month }}</td>
+                    <td>{{ application.religion }}</td>
+                    <td>{{ application.believe_in_god }}</td>
+                    <td>{{ application.call_brahmins_for_rituals }}</td>
+                    <td>{{ application.believe_in_rituals }}</td>
+                    <td>{{ application.worship_of_heirlooms }}</td>
+                    <td>{{ application.cause_for_untouchability }}</td>
+                    <td>{{ application.main_problem_of_dalits }}</td>
+                    <td>{{ application.untouchability_related_to_religion }}</td>
+                    <td>{{ application.solution_given_by_dr_ambedkar_for_untouchability }}</td>
+                    <td>{{ application.solution_for_untouchability_your_pov }}</td>
+                    <td>{{ application.read_ambedkar_books }}</td>
+                    <td>{{ application.willing_to_volunteer_for_free }}</td>
+                    <td>{{ application.hobby }}</td>
+                    <td>{{ application.additional_skills }}</td>
+                    <td>{{ application.willing_to_visit_adw_hostels }}</td>
+                    <td>{{ application.social_media_account }}</td>
+                    <td>{{ application.do_you_agree_that_conversion_is_a_solution_for_untouchability }}</td>
+                    <td>{{ application.is_untouchability_prevalent_nowadays }}</td>
+                    <td>{{ application.how_many_assistant_district_coordinators_you_can_gather }}</td>
+                    <td>{{ application.affiliated_to_any_political_party }}</td>
+                    <td>{{ application.status }}</td>
+                    {% if current_user_role == 'DC' %}
+                    <td>
+                        <form id="approveForm" method="post">
+                            {% csrf_token %}
+                            <input class="form-check-input" type="checkbox" name="id-to-approve" value={{application.id}} id="approve">
+                        </form>
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" disabled></td>
+                    <td><input class="form-check-input" type="checkbox" disabled></td>
+                    {% elif current_user_role == 'ZC' %}
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    <td>
+                        <form id="approveForm" method="post">
+                            {% csrf_token %}
+                            <input class="form-check-input" type="checkbox" name="id-to-approve" value={{application.id}} id="approve">
+                        </form>
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" disabled></td>
+                    {% elif current_user_role == 'SC'%}
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    <td>
+                        <form id="approveForm" method="post">
+                            {% csrf_token %}
+                            <input class="form-check-input" type="checkbox" name="id-to-approve" value={{application.id}} id="approve">
+                        </form>
+                    </td>
+                    {% else %}
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    <td><input class="form-check-input bg-success" type="checkbox" disabled checked></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-muted text-center mt-5 pt-5">No Pending Applications</p>
+    {% endif %}
+</div>
+
+
+
+<script>
+// script.js
+
+document.addEventListener("DOMContentLoaded", function () {
+    const checkbox = document.getElementById("approve");
+    
+    checkbox.addEventListener("change", function () {
+        if (checkbox.checked) {
+            const result = confirm("Do you want to approve the application?");
+            
+            if (result) {
+                // Submit the form
+                document.getElementById("approveForm").submit();
+            } else {
+                // Uncheck the checkbox if "No" was clicked
+                checkbox.checked = false;
+            }
+        }
+    });
+});
+
+
+</script>
+
+{% endblock %}
