@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
 
 
 def Choices():
@@ -110,7 +109,6 @@ class Application(models.Model):
     password = models.CharField(max_length=150, null=False, default="admin")
 
     def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
         if not self.id:  # Only for new instances
             if self.role == 'SC':
                 prefix = 'AAYESSC'

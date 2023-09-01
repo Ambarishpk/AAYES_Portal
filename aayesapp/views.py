@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Application
 from django.db.models import Q
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib import messages
 
 
@@ -30,6 +30,7 @@ def login_view(request):
                 request.session['authenticated_id'] = id
                 request.session['role'] = application_user.role
                 request.session['role_tuple'] = ['DC', 'SC', 'ZC']
+                request.session.set_expiry(86400)
                 messages.success(request, 'Successfully Logged In!')
                 return redirect('home')
             else:
@@ -61,10 +62,10 @@ def approval(request):
 
         if 'DC' in current_user_id:
             application.approved_by_dc = True
-            application.status = 'Pending Approval of ZC'
+            application.status = 'Pending Approval of Zonal Coordinator'
         elif 'ZC' in current_user_id:
             application.approved_by_zc = True
-            application.status = 'Pending Approval of SC'
+            application.status = 'Pending Approval of State Coordinator'
         elif 'SC' in current_user_id:
             application.approved_by_sc = True
             application.status = 'Approved'
@@ -78,16 +79,22 @@ def approval(request):
     if 'authenticated_id' in request.session:
         id = request.session.get('authenticated_id')
         current_user = Application.objects.get(id=id)
-        if 'DC' in current_user.id:
-            status = 'Pending Approval of DC'
-        elif 'ZC' in current_user.id:
-            status = 'Pending Approval of ZC'
-        elif 'SC' in current_user.id:
-            status = 'Pending Approval of SC'
+        if 'AAYESDC' in current_user.id:
+            status = 'Pending Approval of District Coordinator'
+            applications = Application.objects.filter(~Q(id=current_user.id) & Q(
+                district=current_user.district) & Q(status=status))
+        elif 'AAYESZC' in current_user.id:
+            status = 'Pending Approval of Zonal Coordinator'
+            applications = Application.objects.filter(~Q(id=current_user.id) & Q(
+                district=current_user.district) & Q(status=status))
+        elif 'AAYESSC' in current_user.id:
+            status = 'Pending Approval of State Coordinator'
+            applications = Application.objects.filter(
+                ~Q(id=current_user.id) & Q(status=status))
         else:
             pass
-        applications = Application.objects.filter(
-            Q(district=current_user.district) & Q(status=status))
+        # applications = Application.objects.filter(~Q(id=current_user.id) & Q(
+        #     district=current_user.district) & Q(status=status))
         context = {
             'applications': applications,
             'current_user_role': current_user.role
@@ -217,7 +224,7 @@ def registration(request):
             'adc_can_gather', None)
         affiliated_to_any_political_party = request.POST.get(
             'political_party', None)
-        password = request.POST.get('password')
+        password = make_password(request.POST.get('password'))
 
         status = 'Pending Approval of District Coordinator'
         approved_by_dc = False
