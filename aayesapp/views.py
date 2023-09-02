@@ -53,6 +53,8 @@ def login_view(request):
 def approval(request):
     if request.method == 'POST':
         approve_id = request.POST.get('id-to-approve')
+
+        print('ID TO APPROVE: ', approve_id)
         current_user_id = request.session.get('authenticated_id')
         print('Approve ID is: ', approve_id)
         try:
@@ -72,7 +74,7 @@ def approval(request):
         else:
             pass
 
-        application.save()
+        # application.save()
 
         messages.success(request, f'Application has been Approved')
 

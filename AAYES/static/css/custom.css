@@ -1,4 +1,25 @@
+body {
+    background-color: #E8EAED; 
+    overflow-x: hidden;
+    font-family: sans-serif;
+    font-style: normal;
+}
+
 .nav-item:hover {
     background-color: beige;
     border-radius: 0px 30px 30px 0px;
+}
+
+.notepad-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: rgba(153, 51, 56, 0.565);
+}
+
+.notepad-title {
+    font-size: 1.5rem;
+}
+
+.notepad-content {
+    padding: 20px;
 }

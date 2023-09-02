@@ -2,10 +2,99 @@
 
 {% block content %}
 
-<div class="container mt-5 pt-5">
-    <h5 class="text-center text-danger">Your Application ID: {{ application_info.id }}</h5>
-    <h5 class="text-center text-danger">Your Application Status: {{ application_info.status }}</h5>
-    <p class="text-center text-muted">Developement is in progress. Please visit later.</p>
-</div>
+<div class="container">                      
+    <div class="row text-center justify-content-center mt-5 mb-5">
+        <div class="col-xl-6 col-lg-8 mt-5">
+            <h4 class="font-weight-bold text-primary">Application ID: {{ application_info.id }}</h2>
+            <p class="text-muted">Thanks for showing your willingness. You can track your application status here.</p>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mt-5">
+            <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+                <div class="timeline-step timeline-step-success">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-success"></div>
+                        <p class="h6 mt-3 mb-1">Submitted</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Application has been submitted</p>
+                    </div>
+                </div>
+
+                {% if application_info.status == 'Pending Approval of District Coordinator' %}
+                <div class="timeline-step timeline-step-pending">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-pending"></div>
+                        <p class="h6 mt-3 mb-1">Review 1</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">{{ application_info.status }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="timeline-step timeline-step-success">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-success"></div>
+                        <p class="h6 mt-3 mb-1">Review 1</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Approved by District Coordinator</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if application_info.status == 'Pending Approval of Zonal Coordinator' or application_info.status == 'Pending Approval of District Coordinator'%}
+                <div class="timeline-step timeline-step-pending">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-pending"></div>
+                        <p class="h6 mt-3 mb-1">Review 2</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Awaiting approval of Zonal Coordinator</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="timeline-step timeline-step-success">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-success"></div>
+                        <p class="h6 mt-3 mb-1">Review 2</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Approved by Zonal Coordinator</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if application_info.status == 'Pending Approval of State Coordinator' or application_info.status == 'Pending Approval of Zonal Coordinator'  or application_info.status == 'Pending Approval of District Coordinator'%}
+                <div class="timeline-step timeline-step-pending">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-pending"></div>
+                        <p class="h6 mt-3 mb-1">Review 3</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Awaiting approval of State Coordinator</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="timeline-step timeline-step-success">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-success"></div>
+                        <p class="h6 mt-3 mb-1">Review 3</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Approved by State Coordinator</p>
+                    </div>
+                </div>
+                {% endif %}
+
+
+                {% if application_info.status == 'Approved' %}
+                <div class="timeline-step timeline-step-success mb-0">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-success"></div>
+                        <p class="h6 mt-3 mb-1">Final Status</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">{{ application_info.status }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="timeline-step timeline-step-pending mb-0">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover">
+                        <div class="inner-circle-pending"></div>
+                        <p class="h6 mt-3 mb-1">Final Status</p>
+                        <p class="text-muted mb-0 mb-lg-0 fw-light">Pending</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

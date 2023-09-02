@@ -109,31 +109,43 @@ class Application(models.Model):
     password = models.CharField(max_length=150, null=False, default="admin")
 
     def save(self, *args, **kwargs):
-        if not self.id:  # Only for new instances
-            if self.role == 'SC':
-                prefix = 'AAYESSC'
-            elif self.role == 'DC':
-                prefix = 'AAYESDC'
-            elif self.role == 'ZC':
-                prefix = 'AAYESZC'
-            elif self.role == 'ADC':
-                prefix = 'AAYESADC'
-            else:
-                last_member_id = Application.objects.filter(
-                    role='MBR').order_by('-id').first()
-                if last_member_id:
-                    last_member_number = int(last_member_id.id[-3:]) + 1
+        if not self.id:
+            if self.role in ('SC', 'ZC', 'DC', 'ADC'):
+                print('inside coordinators')
+                if self.role == 'SC':
+                    prefix = 'AAYESSC'
+                elif self.role == 'DC':
+                    prefix = 'AAYESDC'
+                elif self.role == 'ZC':
+                    prefix = 'AAYESZC'
                 else:
-                    last_member_number = 1
-                prefix = 'AAYESMBR'
-                self.id = f'{prefix}{last_member_number:03}'
-            last_id = Application.objects.filter(
-                role=self.role).order_by('-id').first()
-            if last_id and last_id.id.startswith(prefix):
-                last_number = int(last_id.id[len(prefix):]) + 1
+                    prefix = 'AAYESADC'
+
+                last_id = Application.objects.filter(
+                    role=self.role).order_by('-id').first()
+                print('last id: ', last_id)
+                if last_id and last_id.id.startswith(prefix):
+                    last_number = int(last_id.id[len(prefix):]) + 1
+                    print('Inside If last number: ', last_number)
+                else:
+                    last_number = 1
+                    print('Inside else last number: ', last_number)
+                self.id = f'{prefix}{last_number:03}'
+                print('Self ID: ', self.id)
             else:
-                last_number = 1
-            self.id = f'{prefix}{last_number:03}'
+                print('inside MBR')
+                prefix = 'AAYESMBR'
+
+                last_id = Application.objects.exclude(role__in=['DC', 'SC', 'ZC', 'ADC']).order_by('-id').first()
+                print('last id: ', last_id)
+                if last_id and last_id.id.startswith(prefix):
+                    last_number = int(last_id.id[len(prefix):]) + 1
+                    print('Inside If last number: ', last_number)
+                else:
+                    last_number = 1
+                    print('Inside else last number: ', last_number)
+                self.id = f'{prefix}{last_number:03}'
+                print('Self ID: ', self.id)
 
         super(Application, self).save(*args, **kwargs)
 
