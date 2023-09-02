@@ -20,6 +20,7 @@ def logout_view(request):
 def login_view(request):
     if request.method == 'POST':
         id = request.POST['id']
+        id = id.upper()
         password = request.POST['password']
 
         try:
@@ -74,7 +75,7 @@ def approval(request):
         else:
             pass
 
-        # application.save()
+        application.save()
 
         messages.success(request, f'Application has been Approved')
 
